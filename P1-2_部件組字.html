@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#e0f2fe">
+<title>低小｜文字登山王</title>
+<style>
+
+:root{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%;color:#273449}
+*{box-sizing:border-box}
+html{min-width:320px;min-height:100%;scroll-behavior:smooth;touch-action:pan-x pan-y}
+body{margin:0;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button{font:inherit;cursor:pointer;border:0}
+button:disabled{cursor:default;opacity:.55;transform:none!important;box-shadow:none!important}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:4px solid #f59e0b;outline-offset:3px}
+[hidden]{display:none!important}
+.page{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;gap:14px;padding:calc(14px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) calc(16px + env(safe-area-inset-left,0px))}
+.topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1120px;width:100%;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-size:clamp(19px,2.6vw,28px);font-weight:900;letter-spacing:.02em}
+.brand-emoji{display:grid;place-items:center;width:44px;height:44px;font-size:26px;background:#ffffffb8;border:2px solid #ffffff;border-radius:13px;box-shadow:0 5px 16px #00000014}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.small-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:46px;padding:9px 13px;border-radius:13px;border:2px solid #ffffffae;font-weight:800;background:#ffffffdb;color:#39465a;box-shadow:0 3px 0 #00000016;font-size:14px}
+.small-btn:active,.primary-btn:active,.answer-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #00000016}
+.primary-btn{width:100%;min-height:56px;padding:13px 18px;border-radius:16px;color:white;font-size:clamp(17px,2.4vw,23px);font-weight:900;box-shadow:0 5px 0 #00000025,0 9px 18px #00000012}
+.surface{background:#ffffffea;border:3px solid #fff;border-radius:23px;box-shadow:0 14px 30px #2734491a}
+.pill{display:inline-flex;align-items:center;border-radius:99px;padding:6px 13px;font-weight:900;font-size:13px;background:#ffedd5;color:#92400e}
+.muted{color:#64748b}
+.notice{min-height:40px;display:flex;justify-content:center;align-items:center;text-align:center;font-size:clamp(14px,1.7vw,17px);font-weight:800;line-height:1.5;padding:5px 10px}
+.game-main{width:100%;max-width:1050px;margin:auto;display:flex;flex-direction:column;gap:13px}
+.score-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.score{background:#ffffffd9;border:2px solid #ffffff;border-radius:15px;padding:9px 14px;font-weight:900;font-size:clamp(13px,1.7vw,18px)}
+.score:last-child{text-align:right}
+.progress-badge{border-radius:999px;background:#ffffffdf;border:2px solid white;padding:8px 14px;font-weight:900;white-space:nowrap;font-size:clamp(12px,1.5vw,17px);text-align:center}
+.question{background:#fffffff0;border:3px solid #ffffff;border-radius:22px;box-shadow:0 10px 25px #00000013;padding:clamp(14px,2.2vw,25px);text-align:center}
+.question-text{font-weight:900;font-size:clamp(19px,2.5vw,29px);line-height:1.65;overflow-wrap:anywhere}
+.dual{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;width:100%}
+.player-card{border-radius:22px;padding:12px;background:#ffffffed;box-shadow:0 10px 22px #00000014;border:3px solid #fff;min-width:0}
+.player-card.red{outline:2px solid #fb7185;outline-offset:-5px}
+.player-card.blue{outline:2px solid #60a5fa;outline-offset:-5px}
+.player-head{display:flex;justify-content:space-between;align-items:center;gap:5px;font-size:clamp(13px,1.7vw,19px);font-weight:900;margin-bottom:9px}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.answer-btn{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;min-height:58px;padding:10px 6px;border-radius:13px;background:#e2e8f0;color:#172033;font-size:clamp(17px,2vw,22px);font-weight:900;border:2px solid #ffffff8a;box-shadow:0 4px 0 #0000001c;overflow-wrap:anywhere}
+.answer-btn.p1{background:#fda4af;color:#701a32}
+.answer-btn.p2{background:#93c5fd;color:#123968}
+.answer-btn.correct{background:#86efac!important;color:#14532d!important}
+.answer-btn.wrong{background:#fecaca!important;color:#991b1b!important}
+.player-card.stunned{animation:shake .26s ease-out}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.overlay{position:fixed;inset:0;z-index:50;background:#0f172ab8;backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:calc(18px + env(safe-area-inset-top,0px)) calc(18px + env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) calc(18px + env(safe-area-inset-left,0px))}
+.modal{width:min(100%,570px);margin:auto;border-radius:27px;background:#fffffff7;border:4px solid #fff;box-shadow:0 20px 65px #0005;text-align:center;padding:clamp(20px,4vw,37px);color:#273449}
+.modal h1,.modal h2{font-size:clamp(26px,4.5vw,41px);line-height:1.3;margin:0 0 14px;font-weight:900}
+.modal p{line-height:1.8;font-size:clamp(15px,1.9vw,19px);font-weight:750;color:#475569;margin:0 0 18px}
+.modal .meta{font-size:14px;color:#64748b}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:15px}
+.modal-actions > *{flex:1 1 185px}
+footer.note{max-width:1100px;width:100%;margin:0 auto;text-align:center;color:#475569;font-size:12px;font-weight:700;line-height:1.5}
+@media (max-width:520px){.page{padding:10px 10px 14px;gap:9px}.brand{font-size:17px}.brand-emoji{width:36px;height:36px;font-size:20px}.small-btn{min-height:43px;font-size:12px;padding:7px 9px}.score-row{gap:5px}.score{padding:7px;font-size:12px}.progress-badge{padding:8px;font-size:11px}.dual{gap:7px}.player-card{padding:7px;border-radius:15px}.answers{gap:6px}.answer-btn{min-height:53px;padding:8px 3px;font-size:16px}.question{padding:13px}.question-text{font-size:18px}}
+@media (max-height:680px) and (min-width:700px){.page{gap:7px;padding-top:8px;padding-bottom:8px}.game-main{gap:7px}.question{padding:10px 17px}.answer-btn{min-height:50px}.notice{min-height:30px}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+body{background:linear-gradient(180deg,#87cefa 0%,#e0f2fe 48%,#bbf7d0 100%)}
+.low .brand{color:#78350f}
+.start{background:linear-gradient(145deg,#ffffff,#f0fdf4)}
+.low .primary-btn{background:linear-gradient(110deg,#10b981,#15803d)}
+.mountain{height:clamp(190px,28vh,245px);position:relative;border:3px solid #fff;border-radius:23px;overflow:hidden;box-shadow:0 10px 23px #164e632e;background:linear-gradient(180deg,#bae6fd 0%,#d9f99d 100%);display:flex;justify-content:center}
+.mountain::before{content:'🏔️';position:absolute;left:4%;bottom:0;font-size:clamp(80px,17vw,145px);opacity:.15;pointer-events:none}
+.mountain::after{content:'🌲 🌲 🌲';position:absolute;bottom:4px;right:4%;font-size:26px;opacity:.6}
+.mountain-title{position:absolute;left:50%;top:5px;transform:translateX(-50%);font-size:15px;background:#fbbf24;border-radius:99px;padding:5px 12px;font-weight:900;z-index:5;white-space:nowrap}
+.climb-track{height:100%;width:min(570px,90%);position:relative;border-left:3px dashed #a1620780;border-right:3px dashed #a1620780;background:repeating-linear-gradient(to top,#ffffff26 0,#ffffff26 1px,transparent 1px,transparent 10%)}
+.climb-track::after{content:'起點';position:absolute;bottom:0;left:50%;transform:translateX(-50%);color:#0f766e;font-weight:900;font-size:12px}
+.avatar{position:absolute;z-index:3;display:flex;flex-direction:column;gap:2px;align-items:center;transition:bottom .24s ease-out;bottom:5%}
+.avatar .emoji{width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:28px;border:3px solid #f43f5e;box-shadow:0 4px 8px #0002}
+.avatar.two .emoji{border-color:#3b82f6}
+.avatar span{padding:2px 7px;border-radius:99px;background:#e11d48;color:white;font-size:12px;font-weight:900}
+.avatar.two span{background:#2563eb}
+.avatar.one{left:25%;transform:translateX(-50%)}
+.avatar.two{left:75%;transform:translateX(-50%)}
+.parts{border-radius:12px;text-align:center;padding:10px 6px;margin-bottom:9px;background:#fff1f2;font-size:clamp(20px,3vw,28px);font-weight:900}
+.blue .parts{background:#dbeafe}
+.feedback{min-height:24px;font-size:13px;font-weight:900;text-align:center;padding-top:6px}
+.result-emoji{font-size:56px;margin:0 0 10px}
+@media(max-width:520px){.mountain{height:200px}.parts{font-size:19px;padding:9px 1px}.avatar .emoji{width:39px;height:39px;font-size:22px}.feedback{font-size:11px}}
+
+</style>
+<script>
+// Prevent pinch-to-zoom in iPad Safari without interfering with two-player answer taps.
+document.addEventListener('gesturestart', function (event) {
+  event.preventDefault();
+}, {passive: false});
+document.addEventListener('gesturechange', function (event) {
+  event.preventDefault();
+}, {passive: false});
+</script>
+</head>
+<body>
+<div class="page low">
+<header class="topbar">
+ <div class="brand"><span class="brand-emoji">🏔️</span>低小：文字登山王</div>
+ <nav class="actions" aria-label="遊戲操作"><button type="button" class="small-btn" id="soundBtn" aria-pressed="true">🔊 音效開</button><a class="small-btn" href="index.html">🏠 返回主頁</a></nav>
+</header>
+<main class="game-main" id="game" hidden>
+ <div class="mountain" aria-label="兩位玩家的登山進度">
+  <div class="mountain-title">🏆 山頂 · 第 10 階</div>
+  <div class="climb-track">
+   <div class="avatar one" id="avatar1"><div class="emoji">🐱</div><span>P1</span></div>
+   <div class="avatar two" id="avatar2"><div class="emoji">🐶</div><span>P2</span></div>
+  </div>
+ </div>
+ <div class="dual">
+  <section class="player-card red" aria-label="玩家一答題區"><div class="player-head"><span>🐱 玩家一</span><span id="progress1">0 / 10 階</span></div><div class="parts" id="question1"></div><div class="answers" id="options1"></div><div id="feedback1" class="feedback" aria-live="polite"></div></section>
+  <section class="player-card blue" aria-label="玩家二答題區"><div class="player-head"><span>🐶 玩家二</span><span id="progress2">0 / 10 階</span></div><div class="parts" id="question2"></div><div class="answers" id="options2"></div><div id="feedback2" class="feedback" aria-live="polite"></div></section>
+ </div>
+</main>
+<footer class="note">答對前進 1 階，答錯退後 1 階（最低第 0 階）；最先到第 10 階者勝出。</footer>
+<div class="overlay" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+ <div class="modal start"><div style="font-size:56px">🏔️</div><h1 id="startTitle">雙人極速登山大賽</h1><p>找出漢字缺少的部件！每位玩家有自己的題目，支援兩人同時多點觸控。<strong>答對 +1 階，答錯 −1 階</strong>，先登上第 10 階者獲勝。</p><button type="button" id="startBtn" class="primary-btn">🚀 開始對戰！</button><div class="meta" style="margin-top:14px">建議 iPad 橫向，兩人左右並排操作</div></div>
+</div>
+<div class="overlay" id="endModal" hidden role="dialog" aria-modal="true" aria-labelledby="endTitle">
+ <div class="modal"><div class="result-emoji">🏆🎉</div><h2 id="endTitle">登頂成功！</h2><p id="endDescription"></p><div class="modal-actions"><button type="button" class="primary-btn" id="replayBtn" style="background:#10b981">🔄 再玩一次</button><a class="small-btn" href="index.html">🏠 返回主頁</a></div></div>
+</div>
+</div>
+<script>
+
+'use strict';
+const characterData = [
+ {char:'明',left:'日',right:'月',distractors:['木','目','口','言']},
+ {char:'林',left:'木',right:'木',distractors:['日','女','米','斤']},
+ {char:'相',left:'木',right:'目',distractors:['日','月','口','生']},
+ {char:'姓',left:'女',right:'生',distractors:['木','目','欠','斗']},
+ {char:'朋',left:'月',right:'月',distractors:['日','木','口','言']},
+ {char:'欣',left:'斤',right:'欠',distractors:['月','女','生','斗']},
+ {char:'課',left:'言',right:'果',distractors:['木','米','口','乞']},
+ {char:'吃',left:'口',right:'乞',distractors:['日','斤','欠','力']},
+ {char:'料',left:'米',right:'斗',distractors:['木','言','果','生']},
+ {char:'加',left:'力',right:'口',distractors:['日','乞','欠','女']}
+];
+const el=id=>document.getElementById(id);
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+let audioContext=null, soundOn=true;
+function sound(kind){if(!soundOn)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;audioContext ||=new C();if(audioContext.state==='suspended') audioContext.resume().catch(()=>{});const t=audioContext.currentTime;const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.connect(gain);gain.connect(audioContext.destination);osc.type=kind==='wrong'?'sawtooth':'sine';osc.frequency.setValueAtTime(kind==='wrong'?220:kind==='win'?700:510,t);osc.frequency.exponentialRampToValueAtTime(kind==='wrong'?130:kind==='win'?1040:770,t+.17);gain.gain.setValueAtTime(.09,t);gain.gain.exponentialRampToValueAtTime(.001,t+.2);osc.start(t);osc.stop(t+.2)}catch(_){}}
+el('soundBtn').addEventListener('click',()=>{soundOn=!soundOn;el('soundBtn').textContent=soundOn?'🔊 音效開':'🔇 音效關';el('soundBtn').setAttribute('aria-pressed',String(soundOn))});
+let gameId=0, finished=false;
+const players={1:{step:0,locked:false,last:null,q:null},2:{step:0,locked:false,last:null,q:null}};
+function makeQuestion(player){let pool=characterData.filter(c=>c.char!==player.last);const item=pool[Math.floor(Math.random()*pool.length)];player.last=item.char;const kind=Math.random()<.5?0:1;const answer=kind===0?item.right:item.left;return {text:kind===0?`${item.left} ＋ ❓ ＝ ${item.char}`:`❓ ＋ ${item.right} ＝ ${item.char}`,answer,options:shuffle([answer,...shuffle(item.distractors.filter(x=>x!==answer)).slice(0,3)])};}
+function render(n){const p=players[n];p.q=makeQuestion(p);el('question'+n).textContent=p.q.text;el('progress'+n).textContent=p.step+' / 10 階';let grid=el('options'+n);grid.replaceChildren();for(const opt of p.q.options){const btn=document.createElement('button');btn.type='button';btn.className='answer-btn '+(n===1?'p1':'p2');btn.textContent=opt;btn.dataset.player=String(n);btn.dataset.choice=opt;grid.append(btn);}}
+function setProgress(){for(const n of [1,2]){const p=players[n];el('avatar'+n).style.bottom=(5+p.step/10*67)+'%';el('progress'+n).textContent=p.step+' / 10 階';}}
+function start(){gameId++;finished=false;for(const n of [1,2]){Object.assign(players[n],{step:0,locked:false,last:null,q:null});el('feedback'+n).textContent='';}el('startModal').hidden=true;el('endModal').hidden=true;el('game').hidden=false;setProgress();render(1);render(2);}
+function answer(n,opt,btn){const p=players[n];if(finished||p.locked||!p.q)return;p.locked=true;const correct=opt===p.q.answer;if(correct){p.step=Math.min(10,p.step+1);el('feedback'+n).textContent='✅ 答對了！向上一步';sound('correct')}else{p.step=Math.max(0,p.step-1);el('feedback'+n).textContent='❌ 答錯了！退後一步';sound('wrong')}btn.classList.add(correct?'correct':'wrong');for(const b of el('options'+n).querySelectorAll('button'))b.disabled=true;setProgress();if(p.step===10){finished=true;sound('win');el('game').hidden=true;el('endTitle').textContent=n===1?'🐱 玩家一登頂成功！':'🐶 玩家二登頂成功！';el('endDescription').textContent=`玩家一：${players[1].step} 階｜玩家二：${players[2].step} 階`;el('endModal').hidden=false;return;}const id=gameId;setTimeout(()=>{if(id!==gameId||finished)return;p.locked=false;el('feedback'+n).textContent='';render(n)},430);}
+
+// 同一次 touchstart 可帶多個觸點：逐一取得螢幕上對應的答題按鈕。
+// 直接處理 touchstart，免受多點觸控時 Safari 合成 click 的先後影響。
+// click 仍供滑鼠、鍵盤及輔助操作使用；800ms 內忽略觸控合成的 click。
+function installAnswerTouches(onAnswer){
+  const area=el('game');
+  let lastTouch=-Infinity;
+  area.addEventListener('touchstart',event=>{
+    const tapped=[];
+    for(const touch of event.changedTouches){
+      const btn=document.elementFromPoint(touch.clientX,touch.clientY)?.closest('button.answer-btn');
+      if(btn&&area.contains(btn)&&!btn.disabled)tapped.push(btn);
+    }
+    if(!tapped.length)return;
+    event.preventDefault();
+    lastTouch=performance.now();
+    for(const btn of tapped){
+      if(!btn.disabled)onAnswer(btn);
+    }
+  },{passive:false});
+  area.addEventListener('click',event=>{
+    const btn=event.target.closest('button.answer-btn');
+    if(!btn||!area.contains(btn)||btn.disabled)return;
+    if(event.detail>0&&performance.now()-lastTouch<800)return;
+    onAnswer(btn);
+  });
+}
+installAnswerTouches(btn=>answer(Number(btn.dataset.player),btn.dataset.choice,btn));
+el('startBtn').addEventListener('click',start);el('replayBtn').addEventListener('click',start);
+
+</script>
+</body>
+</html>

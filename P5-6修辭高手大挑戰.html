@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#e0f2fe">
+<title>高小｜修辭高手大挑戰</title>
+<style>
+
+:root{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%;color:#273449}
+*{box-sizing:border-box}
+html{min-width:320px;min-height:100%;scroll-behavior:smooth;touch-action:pan-x pan-y}
+body{margin:0;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button{font:inherit;cursor:pointer;border:0}
+button:disabled{cursor:default;opacity:.55;transform:none!important;box-shadow:none!important}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:4px solid #f59e0b;outline-offset:3px}
+[hidden]{display:none!important}
+.page{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;gap:14px;padding:calc(14px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) calc(16px + env(safe-area-inset-left,0px))}
+.topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1120px;width:100%;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-size:clamp(19px,2.6vw,28px);font-weight:900;letter-spacing:.02em}
+.brand-emoji{display:grid;place-items:center;width:44px;height:44px;font-size:26px;background:#ffffffb8;border:2px solid #ffffff;border-radius:13px;box-shadow:0 5px 16px #00000014}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.small-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:46px;padding:9px 13px;border-radius:13px;border:2px solid #ffffffae;font-weight:800;background:#ffffffdb;color:#39465a;box-shadow:0 3px 0 #00000016;font-size:14px}
+.small-btn:active,.primary-btn:active,.answer-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #00000016}
+.primary-btn{width:100%;min-height:56px;padding:13px 18px;border-radius:16px;color:white;font-size:clamp(17px,2.4vw,23px);font-weight:900;box-shadow:0 5px 0 #00000025,0 9px 18px #00000012}
+.surface{background:#ffffffea;border:3px solid #fff;border-radius:23px;box-shadow:0 14px 30px #2734491a}
+.pill{display:inline-flex;align-items:center;border-radius:99px;padding:6px 13px;font-weight:900;font-size:13px;background:#ffedd5;color:#92400e}
+.muted{color:#64748b}
+.notice{min-height:40px;display:flex;justify-content:center;align-items:center;text-align:center;font-size:clamp(14px,1.7vw,17px);font-weight:800;line-height:1.5;padding:5px 10px}
+.game-main{width:100%;max-width:1050px;margin:auto;display:flex;flex-direction:column;gap:13px}
+.score-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.score{background:#ffffffd9;border:2px solid #ffffff;border-radius:15px;padding:9px 14px;font-weight:900;font-size:clamp(13px,1.7vw,18px)}
+.score:last-child{text-align:right}
+.progress-badge{border-radius:999px;background:#ffffffdf;border:2px solid white;padding:8px 14px;font-weight:900;white-space:nowrap;font-size:clamp(12px,1.5vw,17px);text-align:center}
+.question{background:#fffffff0;border:3px solid #ffffff;border-radius:22px;box-shadow:0 10px 25px #00000013;padding:clamp(14px,2.2vw,25px);text-align:center}
+.question-text{font-weight:900;font-size:clamp(19px,2.5vw,29px);line-height:1.65;overflow-wrap:anywhere}
+.dual{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;width:100%}
+.player-card{border-radius:22px;padding:12px;background:#ffffffed;box-shadow:0 10px 22px #00000014;border:3px solid #fff;min-width:0}
+.player-card.red{outline:2px solid #fb7185;outline-offset:-5px}
+.player-card.blue{outline:2px solid #60a5fa;outline-offset:-5px}
+.player-head{display:flex;justify-content:space-between;align-items:center;gap:5px;font-size:clamp(13px,1.7vw,19px);font-weight:900;margin-bottom:9px}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.answer-btn{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;min-height:58px;padding:10px 6px;border-radius:13px;background:#e2e8f0;color:#172033;font-size:clamp(17px,2vw,22px);font-weight:900;border:2px solid #ffffff8a;box-shadow:0 4px 0 #0000001c;overflow-wrap:anywhere}
+.answer-btn.p1{background:#fda4af;color:#701a32}
+.answer-btn.p2{background:#93c5fd;color:#123968}
+.answer-btn.correct{background:#86efac!important;color:#14532d!important}
+.answer-btn.wrong{background:#fecaca!important;color:#991b1b!important}
+.player-card.stunned{animation:shake .26s ease-out}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.overlay{position:fixed;inset:0;z-index:50;background:#0f172ab8;backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:calc(18px + env(safe-area-inset-top,0px)) calc(18px + env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) calc(18px + env(safe-area-inset-left,0px))}
+.modal{width:min(100%,570px);margin:auto;border-radius:27px;background:#fffffff7;border:4px solid #fff;box-shadow:0 20px 65px #0005;text-align:center;padding:clamp(20px,4vw,37px);color:#273449}
+.modal h1,.modal h2{font-size:clamp(26px,4.5vw,41px);line-height:1.3;margin:0 0 14px;font-weight:900}
+.modal p{line-height:1.8;font-size:clamp(15px,1.9vw,19px);font-weight:750;color:#475569;margin:0 0 18px}
+.modal .meta{font-size:14px;color:#64748b}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:15px}
+.modal-actions > *{flex:1 1 185px}
+footer.note{max-width:1100px;width:100%;margin:0 auto;text-align:center;color:#475569;font-size:12px;font-weight:700;line-height:1.5}
+@media (max-width:520px){.page{padding:10px 10px 14px;gap:9px}.brand{font-size:17px}.brand-emoji{width:36px;height:36px;font-size:20px}.small-btn{min-height:43px;font-size:12px;padding:7px 9px}.score-row{gap:5px}.score{padding:7px;font-size:12px}.progress-badge{padding:8px;font-size:11px}.dual{gap:7px}.player-card{padding:7px;border-radius:15px}.answers{gap:6px}.answer-btn{min-height:53px;padding:8px 3px;font-size:16px}.question{padding:13px}.question-text{font-size:18px}}
+@media (max-height:680px) and (min-width:700px){.page{gap:7px;padding-top:8px;padding-bottom:8px}.game-main{gap:7px}.question{padding:10px 17px}.answer-btn{min-height:50px}.notice{min-height:30px}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+body{background:radial-gradient(circle at 20% 25%,#1e1b4b 0,transparent 38%),linear-gradient(130deg,#090d16,#152039 62%,#181332);color:#f8fafc}
+.high .brand{color:#fde68a}
+.high .brand-emoji{background:#312e81;border-color:#6366f1}
+.high .small-btn{color:#e2e8f0;background:#334155;border-color:#475569}
+.high .primary-btn{background:linear-gradient(105deg,#d97706,#ea580c);color:#fff}
+.high .score{color:#f1f5f9;background:#1e293b;border-color:#334155}
+.high .progress-badge{color:#fef08a;background:#1e293b;border-color:#334155}
+.high .player-card{background:#19243c;border-color:#334155;color:#fff}
+.high .player-card.red{outline-color:#f59e0b}
+.high .player-card.blue{outline-color:#818cf8}
+.high .answer-btn.p1{background:#92400e;color:#fff;border-color:#f59e0b5e}
+.high .answer-btn.p2{background:#3730a3;color:#fff;border-color:#818cf85e}
+.high .question{background:#182238;border-color:#a78bfa60}
+.high .question-text{color:#fff}
+.high .notice{color:#fcd34d}
+.monster-area{text-align:center;display:grid;justify-items:center;gap:4px}
+.monster-emoji{font-size:clamp(52px,9vw,85px);line-height:1.1;filter:drop-shadow(0 0 20px #a78bfa55)}
+.monster-name{font-size:clamp(16px,2.2vw,21px);font-weight:900;color:#fde68a}
+.hpbar{height:21px;background:#334155;overflow:hidden;border-radius:99px;border:2px solid #64748b;width:min(560px,95%);position:relative}
+.hpfill{height:100%;width:100%;background:linear-gradient(90deg,#22c55e,#86efac);transition:width .3s}
+.hptext{font-size:14px;color:#cbd5e1;font-weight:800}
+.high .question{min-height:100px;display:grid;place-items:center}
+.high .answer-btn{min-height:62px}
+.high .modal{background:#182238;border:3px solid #f59e0b;color:white}
+.high .modal h1,.high .modal h2{color:#fcd34d}
+.high .modal p{color:#e2e8f0}
+.high .modal .meta{color:#cbd5e1}
+.high footer.note{color:#cbd5e1}
+.high .result-emoji{font-size:56px}
+@media(max-width:520px){.monster-emoji{font-size:52px}.hpbar{height:17px}.high .answer-btn{min-height:55px}.high .question{min-height:90px}}
+@media(max-height:740px) and (min-width:700px){.monster-emoji{font-size:48px}.high .answer-btn{min-height:51px}.high .question{min-height:75px}.monster-area{gap:2px}}
+
+</style>
+<script>
+// Prevent pinch-to-zoom in iPad Safari without interfering with two-player answer taps.
+document.addEventListener('gesturestart', function (event) {
+  event.preventDefault();
+}, {passive: false});
+document.addEventListener('gesturechange', function (event) {
+  event.preventDefault();
+}, {passive: false});
+</script>
+</head>
+<body>
+<div class="page high">
+<header class="topbar"><div class="brand"><span class="brand-emoji">👾</span>高小：修辭高手大挑戰</div><nav class="actions"><button type="button" id="soundBtn" class="small-btn" aria-pressed="true">🔊 音效開</button><a class="small-btn" href="index.html">🏠 返回主頁</a></nav></header>
+<main class="game-main" id="game" hidden>
+ <div class="score-row"><div class="score">🟠 P1：<span id="score1">0</span> 分</div><div class="progress-badge"><span id="stageLabel">第 1 關</span> · <span id="qLabel">第 1 / 5 題</span></div><div class="score">🔵 P2：<span id="score2">0</span> 分</div></div>
+ <div class="monster-area"><div id="monsterEmoji" class="monster-emoji">👾</div><div id="monsterName" class="monster-name">森林怪獸</div><div class="hpbar" role="progressbar" aria-label="怪獸血量" aria-valuemin="0" aria-valuemax="240" aria-valuenow="240" id="hpbar"><div class="hpfill" id="hpfill"></div></div><div class="hptext">怪獸 HP：<span id="hpText">240 / 240</span></div></div>
+ <div class="question"><div class="question-text" id="questionText">準備中…</div></div>
+ <div class="notice" id="status" aria-live="polite">先答對的玩家可攻擊怪獸！</div>
+ <div class="dual"><section id="p1Panel" class="player-card red" aria-label="玩家一答題區"><div class="player-head"><span>🟠 玩家一</span><span>攻擊 +80</span></div><div class="answers" id="options1"></div></section><section id="p2Panel" class="player-card blue" aria-label="玩家二答題區"><div class="player-head"><span>🔵 玩家二</span><span>攻擊 +80</span></div><div class="answers" id="options2"></div></section></div>
+</main>
+<footer class="note">3 關，每關最多 5 題。答對 3 題擊退該關怪獸；每人每題只能作答一次，答錯可讓對方補答。</footer>
+<div id="startModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="startTitle"><div class="modal"><div style="font-size:58px">👾</div><h1 id="startTitle">七大修辭 · 勇者挑戰</h1><p>辨認比喻、擬人、誇張、排比、設問、反問及對偶！<strong>3 關、15 題題庫</strong>，每關最多 5 題，答對 3 題即可擊敗怪獸。雙人合作打怪，同時競爭 MVP！</p><button type="button" id="startBtn" class="primary-btn">⚔️ 開始挑戰</button><p class="meta" style="margin-top:13px">支援雙人同時觸控。每題先答對的人得分；答錯後另一人仍可回答。</p></div></div>
+<div id="stageModal" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="stageTitle"><div class="modal"><div class="result-emoji">✨🏆✨</div><h2 id="stageTitle">第 1 關通過！</h2><p id="stageDescription">準備前往下一關。</p><button type="button" id="nextStageBtn" class="primary-btn">➡️ 進入下一關</button></div></div>
+<div id="endModal" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="endTitle"><div class="modal"><div class="result-emoji" id="resultEmoji">🎉🏆🎉</div><h2 id="endTitle">挑戰成功！</h2><p id="endDescription"></p><div class="modal-actions"><button type="button" id="replayBtn" class="primary-btn">🔄 重新挑戰</button><a href="index.html" class="small-btn">🏠 返回主頁</a></div></div></div>
+</div>
+<script>
+
+'use strict';
+const rawQuestions=[{"q": "「太陽像一個巨大的火球，懸掛在藍天上。」請問這句話使用了哪種修辭？", "options": ["比喻", "擬人", "誇張", "排比"], "answer": 0}, {"q": "「妹妹的臉蛋紅得像熟透的蘋果。」這是使用了哪種修辭法？", "options": ["對偶", "比喻", "設問", "反問"], "answer": 1}, {"q": "「太陽公公露出了燦爛的微笑。」請問這句話使用了哪種修辭？", "options": ["誇張", "擬人", "排比", "對偶"], "answer": 1}, {"q": "「花兒在微風中翩翩起舞。」這是運用了什麼修辭法？", "options": ["比喻", "反問", "擬人", "設問"], "answer": 2}, {"q": "「頑皮的雨滴在屋頂上跳芭蕾舞。」這屬於哪種修辭？", "options": ["擬人", "誇張", "排比", "對偶"], "answer": 0}, {"q": "「這間教室安靜得連一根針掉在地上都聽得見。」使用了什麼修辭？", "options": ["排比", "誇張", "對偶", "擬人"], "answer": 1}, {"q": "「我餓得可以吃下一整頭大象了！」這句話運用了什麼修辭？", "options": ["誇張", "比喻", "設問", "反問"], "answer": 0}, {"q": "「燕子去了，有再來的時候；楊柳枯了，有再青的時候；桃花謝了，有再開的時候。」這是什麼修辭？", "options": ["誇張", "比喻", "排比", "設問"], "answer": 2}, {"q": "「誰是最勇敢的人？就是那位冒險救人的消防員。」使用了哪種修辭？", "options": ["反問", "設問", "對偶", "誇張"], "answer": 1}, {"q": "「難道我們不應該好好珍惜寶貴的時間嗎？」這句話屬於什麼修辭？", "options": ["設問", "反問", "誇張", "比喻"], "answer": 1}, {"q": "「白日依山盡，黃河入海流。」請問使用了哪種修辭？", "options": ["排比", "誇張", "對偶", "擬人"], "answer": 2}, {"q": "「綠樹村邊合，青山郭外斜。」這是運用了什麼修辭法？", "options": ["對偶", "誇張", "設問", "比喻"], "answer": 0}, {"q": "「書本像一盞明燈，照亮我前行的道路。」這句話運用了什麼修辭？", "options": ["反問", "擬人", "比喻", "對偶"], "answer": 2}, {"q": "「我們要努力學習，我們要勇敢嘗試，我們要互相幫助。」運用了什麼修辭？", "options": ["排比", "設問", "比喻", "誇張"], "answer": 0}, {"q": "「難道守時不是我們應有的好習慣嗎？」這是哪一種修辭？", "options": ["對偶", "設問", "反問", "擬人"], "answer": 2}];
+const monsters=[{name:'森林怪獸',emoji:'👾'},{name:'火焰怪獸',emoji:'👹'},{name:'宇宙魔王',emoji:'👿'}];
+const HP=240,DAMAGE=80,PER_STAGE=5;
+const el=id=>document.getElementById(id),shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+let audioContext=null,soundOn=true;
+function sound(kind){if(!soundOn)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;audioContext ||=new C();if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});const t=audioContext.currentTime,o=audioContext.createOscillator(),g=audioContext.createGain();o.connect(g);g.connect(audioContext.destination);o.type=kind==='wrong'?'triangle':'sine';o.frequency.setValueAtTime(kind==='wrong'?180:400,t);o.frequency.exponentialRampToValueAtTime(kind==='wrong'?130:850,t+.18);g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.22)}catch(_){}}
+el('soundBtn').addEventListener('click',()=>{soundOn=!soundOn;el('soundBtn').textContent=soundOn?'🔊 音效開':'🔇 音效關';el('soundBtn').setAttribute('aria-pressed',String(soundOn));});
+let questions=[],stage=0,used=0,hp=HP,scores={p1:0,p2:0},attempted={p1:false,p2:false},resolved=false,active=false,gameId=0,current=null;
+function hpUpdate(){el('hpfill').style.width=(hp/HP*100)+'%';el('hpText').textContent=hp+' / '+HP;el('hpbar').setAttribute('aria-valuenow',String(hp));}
+function scoresUpdate(){el('score1').textContent=scores.p1;el('score2').textContent=scores.p2;}
+function setButtons(){for(const player of ['p1','p2']){const box=el(player==='p1'?'options1':'options2');for(const b of box.querySelectorAll('button'))b.disabled=!active||resolved||attempted[player];}}
+function makeButtons(player,q){const grid=el(player==='p1'?'options1':'options2');grid.replaceChildren();for(let i=0;i<q.options.length;i++){const btn=document.createElement('button');btn.type='button';btn.className='answer-btn '+(player==='p1'?'p1':'p2');btn.textContent=q.options[i];btn.dataset.player=player;btn.dataset.index=String(i);grid.append(btn);}}
+function showQuestion(){if(!active)return;if(used>=PER_STAGE){finish(false);return;}current=questions[stage*PER_STAGE+used];used++;resolved=false;attempted={p1:false,p2:false};el('stageLabel').textContent=`第 ${stage+1} 關`;el('qLabel').textContent=`第 ${used} / ${PER_STAGE} 題`;el('questionText').textContent=current.q;el('status').textContent='先答對的勇者出擊！';makeButtons('p1',current);makeButtons('p2',current);setButtons();}
+function start(){gameId++;questions=shuffle(rawQuestions);stage=0;used=0;hp=HP;scores={p1:0,p2:0};attempted={p1:false,p2:false};resolved=false;active=true;current=null;el('startModal').hidden=true;el('stageModal').hidden=true;el('endModal').hidden=true;el('game').hidden=false;scoresUpdate();setStage();}
+function setStage(){hp=HP;used=0;const monster=monsters[stage];el('monsterName').textContent=monster.name;el('monsterEmoji').textContent=monster.emoji;hpUpdate();showQuestion();}
+function answer(player,choice,button){if(!active||resolved||attempted[player])return;attempted[player]=true;const right=choice===current.answer;const other=player==='p1'?'p2':'p1';const name=player==='p1'?'🟠 玩家一':'🔵 玩家二';button.classList.add(right?'correct':'wrong');if(right){scores[player]++;hp=Math.max(0,hp-DAMAGE);scoresUpdate();hpUpdate();el('status').textContent=`✅ ${name} 答對！怪獸受到 ${DAMAGE} 傷害。`;resolved=true;sound('hit');}else{const panel=el(player==='p1'?'p1Panel':'p2Panel');panel.classList.remove('stunned');void panel.offsetWidth;panel.classList.add('stunned');sound('wrong');if(attempted[other]){el('status').textContent=`❌ 兩位都答錯了，答案是「${current.options[current.answer]}」。`;resolved=true;}else el('status').textContent=`❌ ${name} 答錯了！另一位玩家可以補答。`;}setButtons();if(resolved){const id=gameId;setTimeout(()=>{if(id!==gameId||!active)return;advance();},1000);}}
+function advance(){if(hp<=0){if(stage===monsters.length-1){finish(true);}else{active=false;el('stageTitle').textContent=`🏆 第 ${stage+1} 關過關！`;el('stageDescription').textContent=`成功擊退${monsters[stage].name}！目前 P1 ${scores.p1} 分、P2 ${scores.p2} 分。`;el('stageModal').hidden=false;setButtons();}return;}if(used>=PER_STAGE){finish(false);return;}showQuestion();}
+function nextStage(){if(stage>=monsters.length-1)return;stage++;active=true;el('stageModal').hidden=true;setStage();}
+function finish(success){active=false;resolved=true;setButtons();el('game').hidden=true;el('endModal').hidden=false;el('resultEmoji').textContent=success?'🎉🏆🎉':'💪📚';el('endTitle').textContent=success?'三關全破！挑戰成功！':`第 ${stage+1} 關挑戰未成功`;let mvp=scores.p1===scores.p2?'🤝 雙人 MVP':scores.p1>scores.p2?'🟠 玩家一 MVP':'🔵 玩家二 MVP';el('endDescription').textContent=`${success?'成功擊敗三隻怪獸！':'本關題目用完，怪獸尚餘 '+hp+' HP。'} P1：${scores.p1} 分 · P2：${scores.p2} 分。${mvp}！`;sound(success?'win':'wrong');}
+
+// 同一次 touchstart 可帶多個觸點：逐一取得螢幕上對應的答題按鈕。
+// 直接處理 touchstart，免受多點觸控時 Safari 合成 click 的先後影響。
+// click 仍供滑鼠、鍵盤及輔助操作使用；800ms 內忽略觸控合成的 click。
+function installAnswerTouches(onAnswer){
+  const area=el('game');
+  let lastTouch=-Infinity;
+  area.addEventListener('touchstart',event=>{
+    const tapped=[];
+    for(const touch of event.changedTouches){
+      const btn=document.elementFromPoint(touch.clientX,touch.clientY)?.closest('button.answer-btn');
+      if(btn&&area.contains(btn)&&!btn.disabled)tapped.push(btn);
+    }
+    if(!tapped.length)return;
+    event.preventDefault();
+    lastTouch=performance.now();
+    for(const btn of tapped){
+      if(!btn.disabled)onAnswer(btn);
+    }
+  },{passive:false});
+  area.addEventListener('click',event=>{
+    const btn=event.target.closest('button.answer-btn');
+    if(!btn||!area.contains(btn)||btn.disabled)return;
+    if(event.detail>0&&performance.now()-lastTouch<800)return;
+    onAnswer(btn);
+  });
+}
+installAnswerTouches(btn=>answer(btn.dataset.player,Number(btn.dataset.index),btn));
+el('startBtn').addEventListener('click',start);el('replayBtn').addEventListener('click',start);el('nextStageBtn').addEventListener('click',nextStage);
+
+</script>
+</body>
+</html>
